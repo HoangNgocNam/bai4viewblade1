@@ -8,26 +8,31 @@ use Illuminate\Support\Facades\DB;
 class BaseRepository implements BaseRepositoryInterface
 {
     protected $table;
+    protected $model;
+
 
     public function getAll()
     {
         // TODO: Implement getAll() method.
-        $data = DB::table($this->table)
-            ->select()
-            ->get();
-        return $data;
+//        $data = DB::table($this->table)
+//            ->select()
+//            ->get();
+//        return $data;
+
+        return $this->model->All();
     }
 
     public function getById($id)
     {
         // TODO: Implement getById() method.
-       $data = DB::table($this->table)->where('id','=', $id)->get()->first();
+       $data = $this->model->where('id','=', $id)->firstOrFail();
        return $data;
     }
 
     public function delete($id)
     {
         // TODO: Implement delete() method.
-     return   DB::table($this->table)->where('id', '=', $id)->delete();
+     $post = $this->model::findOrfail($id);
+     $post->delete();
     }
 }
